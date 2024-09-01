@@ -1,0 +1,1 @@
+Frontend for my new idea made with React and Typescript
