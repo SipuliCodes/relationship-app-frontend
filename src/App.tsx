@@ -1,8 +1,7 @@
-import React from 'react';
-
-import './App.css';
+import "./App.css";
 
 function App() {
+  console.log();
   return (
     <>
       <h1>Relationship App</h1>
