@@ -1,0 +1,13 @@
+.btn-primary {
+  background-color: var(--primary-color);
+  border: none
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color);
+}
+
+.bg-body-primary {
+  background-color: var(--secondary-bg-color) !important;
+  color: var(--secondary-text-color) !important;
+}
