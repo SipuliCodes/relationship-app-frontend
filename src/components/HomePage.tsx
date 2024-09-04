@@ -26,11 +26,9 @@ const HomePage = () => {
 
   if (idTokenObject) {
     const idToken = JSON.parse(idTokenObject).secret;
-    console.log("ID Token:", idToken);
     name = jwtDecode<CustomPayload>(idToken).given_name;
-  } else {
-    console.log("ID Token not found in sessionStorage.");
   }
+
   const { instance } = useMsal();
 
   const handleSignUp = () => {

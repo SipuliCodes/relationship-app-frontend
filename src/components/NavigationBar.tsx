@@ -49,7 +49,7 @@ export const NavigationBar = () => {
             <Nav.Link className="navbarButton mx-4" href="/calendar">
               Calendar
             </Nav.Link>
-            <Nav.Link className="navbarButton mx-4" href="/Memories">
+            <Nav.Link className="navbarButton mx-4" href="/memories">
               Memories
             </Nav.Link>
           </div>
