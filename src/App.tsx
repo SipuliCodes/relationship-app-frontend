@@ -16,6 +16,7 @@ import { compareIssuingPolicy } from "./utils/claimUtils";
 
 import "./App.css";
 import HomePage from "./components/HomePage";
+import CalendarPage from "./components/CalendarPage/CalendarPage";
 
 interface TokenClaims {
   [key: string]: string | number;
@@ -76,7 +77,7 @@ const Pages: React.FC = () => {
 
   return (
     <Routes>
-      <Route path="/calendar" element={<h1>Calendar</h1>} />
+      <Route path="/calendar" element={<CalendarPage />} />
       <Route path="/" element={<HomePage />} />
     </Routes>
   );
