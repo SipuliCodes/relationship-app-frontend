@@ -17,6 +17,12 @@ const HomePage = () => {
     "6510a378-73f6-477c-8c12-d33fb12aa216-b2c_1_signupsignin.b06aa5b7-289c-424e-96c3-b5a38c2c6033-relationshipappusers.b2clogin.com-idtoken-faf553d8-0611-48e4-a15b-2a7cfbc14889-b2c_1_signupsignin---";
   const idTokenObject = sessionStorage.getItem(idTokenKey);
   let name;
+  let greeting;
+  const time = new Date().getHours();
+  if (5 <= time && time < 12) greeting = "Good morning";
+  else if (12 <= time && time < 18) greeting = "Good afternoon";
+  else if (18 <= time && time < 22) greeting = "Good evening";
+  else greeting = "Why are you awake?";
 
   if (idTokenObject) {
     const idToken = JSON.parse(idTokenObject).secret;
@@ -54,8 +60,10 @@ const HomePage = () => {
         </div>
       </UnauthenticatedTemplate>
       <AuthenticatedTemplate>
-        <div>
-          <h1>Welcome, {name} </h1>
+        <div className="d-flex flex-column align-items-center">
+          <h1>
+            {greeting} {name}
+          </h1>
           <h2>How is your relationship today?</h2>
         </div>
       </AuthenticatedTemplate>
