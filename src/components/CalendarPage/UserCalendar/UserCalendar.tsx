@@ -12,9 +12,9 @@ import { Button } from "react-bootstrap";
 
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import "./UserCalendar.scss";
 
 import AddEventForm from "./AddEventForm/AddEventForm";
+import calendarService from "../../../services/calendarService";
 
 const locales = {
   "en-US": enUS,
@@ -36,44 +36,14 @@ const UserCalendar: React.FC<UserCalendarProps> = ({ calendarName }) => {
   const [showCalendar, setShowCalendar] = useState(true);
   const [events, setEvents] = useState<Event[]>([]);
 
-  const [personalEvents, setPersonalEvents] = useState<Event[]>([
-    {
-      title: "personal",
-      start: new Date(2024, 8, 3, 12),
-      end: new Date(2024, 8, 3, 15),
-      resource: {
-        id: 2,
-      },
-    },
-  ]);
-
-  const [sharedEvents, setSharedEvents] = useState<Event[]>([
-    {
-      title: "shared test",
-      start: new Date(2024, 8, 3, 12),
-      end: new Date(2024, 8, 3, 15),
-      resource: {
-        id: 1,
-      },
-    },
-    {
-      title: "shared",
-      start: new Date(2024, 8, 5, 12),
-      end: new Date(2024, 8, 5, 15),
-      resource: {
-        id: 2,
-      },
-    },
-  ]);
-
   useEffect(() => {
-    if (calendarName == "personal") {
-      setEvents(personalEvents);
-    }
-    if (calendarName == "shared") {
-      setEvents(sharedEvents);
-    }
-  }, [calendarName, personalEvents, sharedEvents]);
+    calendarService
+      .getAllEvents(calendarName)
+      .then((events) => {
+        setEvents(events);
+      })
+      .catch((error) => console.log(error));
+  }, [calendarName]);
 
   const onEventResize: withDragAndDropProps["onEventResize"] = (data) => {
     const { start, end } = data;
@@ -107,12 +77,6 @@ const UserCalendar: React.FC<UserCalendarProps> = ({ calendarName }) => {
 
   const addEvent = (event: Event) => {
     console.log(event);
-    if (calendarName === "personal") {
-      setPersonalEvents([...personalEvents, event]);
-    }
-    if (calendarName === "shared") {
-      setSharedEvents([...sharedEvents, event]);
-    }
     handleElementChange();
   };
 
