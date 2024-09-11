@@ -19,8 +19,6 @@ const AddEventForm: React.FC<AddEventProps> = ({
     endDate: "",
   });
 
-  console.log("id", id);
-
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (

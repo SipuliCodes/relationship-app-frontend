@@ -15,6 +15,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import AddEventForm from "./AddEventForm/AddEventForm";
 import calendarService from "../../../services/calendarService";
+import { useToken } from "../../../hooks/useToken";
 
 const locales = {
   "en-US": enUS,
@@ -35,15 +36,16 @@ interface UserCalendarProps {
 const UserCalendar: React.FC<UserCalendarProps> = ({ calendarName }) => {
   const [showCalendar, setShowCalendar] = useState(true);
   const [events, setEvents] = useState<Event[]>([]);
+  const token = useToken();
 
   useEffect(() => {
     calendarService
-      .getAllEvents(calendarName)
+      .getAllEvents(calendarName, token)
       .then((events) => {
         setEvents(events);
       })
       .catch((error) => console.log(error));
-  }, [calendarName]);
+  }, [calendarName, token]);
 
   const onEventResize: withDragAndDropProps["onEventResize"] = (data) => {
     const { start, end } = data;

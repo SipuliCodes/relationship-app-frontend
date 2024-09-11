@@ -2,13 +2,13 @@ import axios from "axios";
 import config from "../config";
 import { BackendCalendarEvent } from "../interfaces/calendar";
 
-const getAllEvents = async (calendar: string) => {
+const getAllEvents = async (calendar: string, token: string) => {
   try {
     const response = await axios.get(
       `${config.apiUrl}/calendar?calendar=${calendar}`,
       {
         headers: {
-          Authorization: `Bearer <token>`,
+          Authorization: `Bearer ${token}`,
         },
       },
     );

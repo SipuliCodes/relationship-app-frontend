@@ -17,6 +17,8 @@ import { compareIssuingPolicy } from "./utils/claimUtils";
 import "./App.css";
 import HomePage from "./components/HomePage";
 import CalendarPage from "./components/CalendarPage/CalendarPage";
+import { TokenProvider } from "./contexts/TokenContext";
+import { useSetToken } from "./hooks/useToken";
 
 interface TokenClaims {
   [key: string]: string | number;
@@ -24,6 +26,7 @@ interface TokenClaims {
 
 const Pages: React.FC = () => {
   const { instance } = useMsal();
+  const setTokenContext = useSetToken();
 
   useEffect(() => {
     const callbackId = instance.addEventCallback((event: EventMessage) => {
@@ -31,10 +34,11 @@ const Pages: React.FC = () => {
         (event.eventType === EventType.LOGIN_SUCCESS ||
           event.eventType === EventType.ACQUIRE_TOKEN_SUCCESS) &&
         event.payload &&
-        (event.payload as AuthenticationResult).account
+        (event.payload as AuthenticationResult).account &&
+        "accessToken" in event.payload
       ) {
+        setTokenContext(event.payload.accessToken);
         const authResult = event.payload as AuthenticationResult;
-
         if (
           authResult.idTokenClaims &&
           compareIssuingPolicy(
@@ -73,7 +77,7 @@ const Pages: React.FC = () => {
         instance.removeEventCallback(callbackId);
       }
     };
-  }, [instance]);
+  }, [instance, setTokenContext]);
 
   return (
     <Routes>
@@ -90,9 +94,11 @@ interface AppProps {
 const App: React.FC<AppProps> = ({ instance }) => {
   return (
     <MsalProvider instance={instance}>
-      <PageLayout>
-        <Pages />
-      </PageLayout>
+      <TokenProvider>
+        <PageLayout>
+          <Pages />
+        </PageLayout>
+      </TokenProvider>
     </MsalProvider>
   );
 };
