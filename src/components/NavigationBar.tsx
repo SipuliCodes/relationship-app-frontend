@@ -20,7 +20,7 @@ export const NavigationBar = () => {
   useEffect(() => {
     const newTheme = isDarkTheme ? "dark" : "light";
     localStorage.setItem("theme", newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
+    document.documentElement.setAttribute("data-bs-theme", newTheme);
   }, [isDarkTheme]);
 
   const handleLoginRedirect = () => {
