@@ -78,7 +78,15 @@ const UserCalendar: React.FC<UserCalendarProps> = ({ calendarName }) => {
   };
 
   const addEvent = (event: Event) => {
-    console.log(event);
+    calendarService
+      .addEvent(event, calendarName, token)
+      .then((event) => {
+        if (event) {
+          setEvents([...events, event]);
+        }
+      })
+      .catch((error) => console.log(error));
+
     handleElementChange();
   };
 
